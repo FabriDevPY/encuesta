@@ -261,7 +261,7 @@ export default function DashboardPage() {
 
             {/* Sub-tabs selector for Water */}
             <div className="flex flex-wrap gap-2 mb-6">
-              {Object.entries(waterQuestionsConfig).map(([key, config]) => (
+              {Object.entries(waterQuestionsConfig).map(([key, config]: [string, { label: string; title: string; desc: string }]) => (
                 <button
                   key={key}
                   onClick={() => setActiveWaterKey(key as WaterChartKey)}
@@ -328,7 +328,7 @@ export default function DashboardPage() {
 
             {/* Sub-tabs selector for Energy */}
             <div className="flex flex-wrap gap-2 mb-6">
-              {Object.entries(energyQuestionsConfig).map(([key, config]) => (
+              {Object.entries(energyQuestionsConfig).map(([key, config]: [string, { label: string; title: string; desc: string }]) => (
                 <button
                   key={key}
                   onClick={() => setActiveEnergyKey(key as EnergyChartKey)}

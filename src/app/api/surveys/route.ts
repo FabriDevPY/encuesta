@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { Survey } from "@prisma/client";
 
 // Map responses to scores for overall percentage calculations
 const scoreMap: Record<string, number> = {
@@ -66,14 +67,14 @@ export async function GET() {
     const totalSurveys = surveys.length;
     
     // Average age
-    const totalAge = surveys.reduce((acc, curr) => acc + curr.edad, 0);
+    const totalAge = surveys.reduce((acc: number, curr: Survey) => acc + curr.edad, 0);
     const averageAge = parseFloat((totalAge / totalSurveys).toFixed(1));
 
     // Calculate saving percentages based on scores (5 water, 5 energy)
     let totalWaterScore = 0;
     let totalEnergyScore = 0;
 
-    surveys.forEach((s) => {
+    surveys.forEach((s: Survey) => {
       const wGrifo = scoreMap[s.aguaGrifo] ?? 0;
       const wDucha = scoreMap[s.aguaDucha] ?? 0;
       const wFugas = scoreMap[s.aguaFugas] ?? 0;
@@ -107,7 +108,7 @@ export async function GET() {
       energiaElectrodomesticos: { "Sí, siempre": 0, "A veces": 0, Nunca: 0 },
     };
 
-    surveys.forEach((s) => {
+    surveys.forEach((s: Survey) => {
       // Sexo
       if (s.sexo === "Masculino" || s.sexo === "Femenino") {
         counts.sexo[s.sexo]++;
@@ -156,17 +157,17 @@ export async function GET() {
 
     // Format chart data for Recharts (array of { name, value })
     const chartData = {
-      sexo: Object.entries(counts.sexo).map(([name, value]) => ({ name, value })),
-      aguaGrifo: Object.entries(counts.aguaGrifo).map(([name, value]) => ({ name, value })),
-      aguaDucha: Object.entries(counts.aguaDucha).map(([name, value]) => ({ name, value })),
-      aguaFugas: Object.entries(counts.aguaFugas).map(([name, value]) => ({ name, value })),
-      aguaReutilizacion: Object.entries(counts.aguaReutilizacion).map(([name, value]) => ({ name, value })),
-      aguaRiego: Object.entries(counts.aguaRiego).map(([name, value]) => ({ name, value })),
-      energiaLuces: Object.entries(counts.energiaLuces).map(([name, value]) => ({ name, value })),
-      energiaLeds: Object.entries(counts.energiaLeds).map(([name, value]) => ({ name, value })),
-      energiaDesconectado: Object.entries(counts.energiaDesconectado).map(([name, value]) => ({ name, value })),
-      energiaTemperatura: Object.entries(counts.energiaTemperatura).map(([name, value]) => ({ name, value })),
-      energiaElectrodomesticos: Object.entries(counts.energiaElectrodomesticos).map(([name, value]) => ({ name, value })),
+      sexo: Object.entries(counts.sexo).map(([name, value]: [string, number]) => ({ name, value })),
+      aguaGrifo: Object.entries(counts.aguaGrifo).map(([name, value]: [string, number]) => ({ name, value })),
+      aguaDucha: Object.entries(counts.aguaDucha).map(([name, value]: [string, number]) => ({ name, value })),
+      aguaFugas: Object.entries(counts.aguaFugas).map(([name, value]: [string, number]) => ({ name, value })),
+      aguaReutilizacion: Object.entries(counts.aguaReutilizacion).map(([name, value]: [string, number]) => ({ name, value })),
+      aguaRiego: Object.entries(counts.aguaRiego).map(([name, value]: [string, number]) => ({ name, value })),
+      energiaLuces: Object.entries(counts.energiaLuces).map(([name, value]: [string, number]) => ({ name, value })),
+      energiaLeds: Object.entries(counts.energiaLeds).map(([name, value]: [string, number]) => ({ name, value })),
+      energiaDesconectado: Object.entries(counts.energiaDesconectado).map(([name, value]: [string, number]) => ({ name, value })),
+      energiaTemperatura: Object.entries(counts.energiaTemperatura).map(([name, value]: [string, number]) => ({ name, value })),
+      energiaElectrodomesticos: Object.entries(counts.energiaElectrodomesticos).map(([name, value]: [string, number]) => ({ name, value })),
     };
 
     return NextResponse.json({

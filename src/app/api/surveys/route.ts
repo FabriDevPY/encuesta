@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { Survey } from "@prisma/client";
+
+type Survey = Awaited<ReturnType<typeof prisma.survey.findMany>>[number];
 
 // Map responses to scores for overall percentage calculations
 const scoreMap: Record<string, number> = {

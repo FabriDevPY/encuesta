@@ -1,0 +1,27 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Survey {
+  id            String   @id @default(uuid())
+  nombre        String
+  apellido      String
+  edad          Int
+  ciudad        String
+  sexo          String
+  aguaGrifo                String
+  aguaDucha                String
+  aguaFugas                String
+  aguaReutilizacion        String
+  aguaRiego                String
+  energiaLuces             String
+  energiaLeds              String
+  energiaDesconectado      String
+  energiaTemperatura       String
+  energiaElectrodomesticos String
+  createdAt                DateTime @default(now())
+}

@@ -111,8 +111,10 @@ export async function GET() {
 
     surveys.forEach((s: Survey) => {
       // Sexo
-      if (s.sexo === "Masculino" || s.sexo === "Femenino") {
-        counts.sexo[s.sexo]++;
+      if (s.sexo === "Masculino") {
+        counts.sexo.Masculino++;
+      } else if (s.sexo === "Femenino") {
+        counts.sexo.Femenino++;
       }
       // Agua Grifo
       if (s.aguaGrifo in counts.aguaGrifo) {
